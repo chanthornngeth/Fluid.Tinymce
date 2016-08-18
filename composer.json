@@ -1,0 +1,13 @@
+{
+  "name": "tinymce/fluid",
+  "description": "Fetch site content from remote server to local.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Chanthorn Ngeth",
+      "email": "chanthorn@web-essentials.asia",
+      "homepage": "http://www.web-essentials.asia",
+      "role": "Developer"
+    }
+  ]
+}

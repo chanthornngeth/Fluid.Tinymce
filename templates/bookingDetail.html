@@ -1,0 +1,12 @@
+<ul>
+    <f:for each="{bookingOperations}" as="bookingOperation">
+        <li>
+            {bookingOperation.operation.event.rootTitle}
+            {bookingOperation.operation.service.rootEventTitle}
+
+            <f:if condition="{bookingOperation.operation.title}">
+                <f:then> > {bookingOperation.operation.title}</f:then>
+            </f:if>
+        </li>
+    </f:for>
+</ul>

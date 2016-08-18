@@ -1,0 +1,80 @@
+<table width="100%">
+    <f:for each="{booking.distinctBookingOperations}" as="bookingOperation">
+        <tr>
+            <td>{bookingOperation.quantity} x {bookingOperation.title}, à {booking.payment.currency.name} {bookingOperation.operation.price -> f:format.number()}</td>
+            <td style="text-align: right;">{booking.payment.currency.name} {bookingOperation.totalPrice -> f:format.number()}</td>
+        </tr>
+        <tr>
+            <f:if condition="{bookingOperation.operationDate}">
+                <f:then><td colspan="2">{bookingOperation.operationDate}, {bookingOperation.operationVenue}</td></f:then>
+                <f:else><td colspan="2">{bookingOperation.operationVenue}</td></f:else>
+            </f:if>
+        </tr>
+        <f:if condition="{bookingOperation.discount}">
+            <tr>
+                <td colspan="2" style="font-size: 0.8em">Discount {booking.payment.currency.name} {bookingOperation.discount -> f:format.number()}</td>
+            </tr>
+        </f:if>
+        <tr>
+            <td colspan="2" style="font-size: 0.8em">{f:if(condition: booking.includingVat, then: 'inkl', else: 'exkl')} MWST {bookingOperation.vatRate}% {booking.payment.currency.name} {bookingOperation.vatPrice -> f:format.number()}</td>
+        </tr>
+    </f:for>
+    <tr><td colspan="2"><hr></td></tr>
+    <f:if condition="{booking.registrationPrice}">
+        <tr>
+            <td>Registrationsgebühr</td>
+            <td style="text-align: right;">{booking.payment.currency.name} {booking.registrationPrice -> f:format.number()}</td>
+        </tr>
+        <tr>
+            <td colspan="2" style="font-size: 0.8em">{f:if(condition: booking.includingVat, then: 'inkl', else: 'exkl')} MWST {booking.vatRate}% {booking.payment.currency.name} {booking.registrationVatPrice -> f:format.number()}</td>
+        </tr>
+        <tr><td colspan="2"><hr></td></tr>
+    </f:if>
+    <f:if condition="{booking.discount}">
+        <tr>
+            <td>Rabatt{f:if(condition: bookingOperation.discountPercentage, then: ' {bookingOperation.discountPercentage}%')}</td>
+            <td style="text-align: right;">{booking.payment.currency.name} -{booking.discount -> f:format.number()}</td>
+        </tr>
+        <tr>
+            <td colspan="2" style="font-size: 0.8em">{f:if(condition: booking.includingVat, then: 'inkl', else: 'exkl')} MWST {booking.vatRate}% {booking.payment.currency.name} {booking.discountVatPrice -> f:format.number()}</td>
+        </tr>
+        <tr><td colspan="2"><hr></td></tr>
+    </f:if>
+    <f:if condition="{booking.payment.commissionRate}">
+        <tr>
+            <td>Kreditkarten Kommission {booking.payment.commissionRate}%</td>
+            <td style="text-align: right;">{booking.payment.currency.name} {booking.payment.commissionPrice -> f:format.number()}</td>
+        </tr>
+        <tr>
+            <td colspan="2" style="font-size: 0.8em">{f:if(condition: booking.includingVat, then: 'inkl', else: 'exkl')} MWST {booking.payment.vatRate}% {booking.payment.currency.name} {booking.payment.commissionVatPrice -> f:format.number()}</td>
+        </tr>
+        <tr><td colspan="2"><hr></td></tr>
+    </f:if>
+    <f:if condition="{booking.includingVat}">
+        <f:then>
+            <tr>
+                <td>Gesamtpreis (inkl. MWST)</td>
+                <td style="text-align: right;">{booking.payment.currency.name} {booking.payment.totalPriceInclVatRounded -> f:format.number()}</td>
+            </tr>
+            <tr>
+                <td>Total MWST im Gesamtpreis enthalten</td>
+                <td style="text-align: right;">{booking.payment.currency.name} {booking.payment.vatPrice -> f:format.number()}</td>
+            </tr>
+        </f:then>
+        <f:else>
+            <tr>
+                <td>Zwischensumme (exkl. MWST)</td>
+                <td style="text-align: right;">{booking.payment.currency.name} {booking.payment.totalPriceExclVat -> f:format.number()}</td>
+            </tr>
+            <tr><td colspan="2"><hr></td></tr>
+            <tr>
+                <td>Total MWST</td>
+                <td style="text-align: right;">{booking.payment.currency.name} {booking.payment.vatPrice -> f:format.number()}</td>
+            </tr>
+            <tr>
+                <td>Gesamtpreis (inkl. MWST)</td>
+                <td style="text-align: right;">{booking.payment.currency.name} {booking.payment.totalPriceInclVatRounded -> f:format.number()}</td>
+            </tr>
+        </f:else>
+    </f:if>
+</table>
